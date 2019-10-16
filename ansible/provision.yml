@@ -26,6 +26,7 @@
         - remcogerlich
         - caspervdw
         - Derryrover  # Tom
+        - GeOdin  # Madeleine
 
     - name: Install various packages
       apt:

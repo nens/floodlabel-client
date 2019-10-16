@@ -4,9 +4,8 @@ staging:
   vars:
     deploy_type: staging
     build_user: buildout
-    project_slug: waterlabel-site
-    package_name: waterlabel_site
-    site_name: "waterlabel.staging.lizard.net"
+    package_name: floodlabel_site
+    site_name: "floodlabel.staging.lizard.net"
     host_names: "{{ site_name }}"
     checkout_name: master
     project_path: "/srv/{{ site_name }}"
@@ -24,5 +23,5 @@ staging:
         'var/media'
     ]
     clients_path: "{{ project_path }}-clients"
-    client_name: waterlabel-client-v2
+    client_name: floodlabel
     client_version: please-provide-version-in-the-extra-vars

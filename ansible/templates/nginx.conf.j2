@@ -25,12 +25,12 @@ server {
     rewrite ^/favicon.ico$ /static/client/favicon.ico last;
 
     location /static/client/ {
-       alias {{ clients_path }}/waterlabel-client-v2/;
+       alias {{ clients_path }}/floodlabel-client/;
        expires 1h;
     }
 
     location /static/client/static/ {
-       alias {{ clients_path }}/waterlabel-client-v2/static/;
+       alias {{ clients_path }}/floodlabel-client-/static/;
        expires max;
     }
 

@@ -12,7 +12,7 @@
       changed_when: False
 
     - name: Download {{ client_name }} {{ client_version }}
-      command: wget -O '/tmp/{{ client_name }}-{{ client_version }}.zip' 'https://github.com/nens/{{ client_name }}/releases/download/{{ client_version }}/waterlabel.zip'
+      command: wget -O '/tmp/{{ client_name }}-{{ client_version }}.zip' 'https://github.com/nens/{{ client_name }}/releases/download/{{ client_version }}/floodlabel.zip'
       when: current_version.stdout != client_version
 
     - name: Make a temporary dir to unzip {{ client_name }}
