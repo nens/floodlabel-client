@@ -1,0 +1,62 @@
+{
+  "name": "floodlabel",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "author": "Gijs Nijholt <gijs.nijholt@gmail.com>",
+  "dependencies": {
+    "@turf/bbox": "^6.0.1",
+    "@turf/centroid": "^6.0.2",
+    "@types/d3": "^5.7.2",
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.2",
+    "@types/react": "16.9.2",
+    "@types/react-dom": "16.9.0",
+    "d3": "^5.12.0",
+    "leaflet": "^1.5.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-leaflet": "^2.4.0",
+    "react-masked-field": "^2.0.2",
+    "react-native-web": "^0.11.7",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.1.1",
+    "rebass": "^4.0.5",
+    "reflexbox": "^4.0.5",
+    "styled-components": "^4.3.2",
+    "styled-components-breakpoint": "^2.1.1",
+    "styled-components-grid": "^2.2.2",
+    "styled-components-spacing": "^3.1.1",
+    "typescript": "3.5.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "https://demo.lizard.net",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.7",
+    "@types/react-native": "^0.60.11",
+    "@types/react-router-dom": "^4.3.5",
+    "@types/rebass": "^4.0.0",
+    "@types/styled-components": "^4.1.18",
+    "@types/turf": "^3.5.32"
+  }
+}
