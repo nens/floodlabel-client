@@ -1,0 +1,102 @@
+# Goal: do the root-related basic provisioning for a site (now: only this
+# server). A buildout user is set up with ssh keys so that the relevant devs
+# can ssh in as user buildout, which will be used by the deploy.yml script.
+---
+- name: provision server to prepare for the actual deployment
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Add build user and set an unusable password.
+      user:
+        name: "{{ build_user }}"
+        password: '*'
+        state: present
+        shell: "/bin/bash"
+        groups: ''  # ensuring buildout is not a member of the sudo group
+        append: no  # append=yes would make groups='' ineffective
+
+    - name: "Add maintainers' ssh keys so they can log in as the build user."
+      authorized_key:
+        user: "{{ build_user }}"
+        key: https://github.com/{{ item }}.keys
+      with_items:
+        - byrman
+        - remcogerlich
+        - caspervdw
+        - Derryrover  # Tom
+
+    - name: Install various packages
+      apt:
+        state: latest
+        name:
+          - git
+          - unzip  # for the client deployment
+          - python3-dev
+          - python3-pip
+          - supervisor
+          - nginx
+          - libpq-dev # for psycopg2 (postgres backend)
+
+    - name: Upgrade setuptools
+      pip:
+        name: setuptools
+        state: latest
+
+    # Note the pinning because of https://github.com/pypa/pipenv/issues/2666
+    - name: Install pip
+      pip:
+        name: pip
+        version: "18.1"
+
+    - name: Install pipenv
+      pip:
+        name: pipenv
+        version: "2018.11.26"
+
+    - name: Create the project path.
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: 0755
+        owner: "{{ build_user }}"
+        group: "{{ build_user }}"
+      with_items:
+        - "{{ project_path }}"
+        - "{{ clients_path }}"
+
+    - name: Grant "{{ build_user }}" permission to reload nginx
+      lineinfile:
+        path: /etc/sudoers.d/buildout
+        line: "{{ item }}"
+        validate: /usr/sbin/visudo -cqf %s
+        create: yes
+        mode: 0440
+      with_items:
+        - "buildout ALL= NOPASSWD: /usr/sbin/service nginx *"
+        - "buildout ALL= NOPASSWD: /usr/sbin/nginx -t"
+
+    - name: Ensure github.com is a known host
+      lineinfile:
+        dest: "/home/{{ build_user }}/.ssh/known_hosts"
+        line: "{{ lookup('pipe', 'ssh-keyscan -t rsa github.com') }}"
+        regexp: "^github\\.com"
+        create: yes
+        state: present
+        owner: "{{ build_user }}"
+        group: "{{ build_user }}"
+        mode: 0600
+
+    # Symlinks are created in advance, so deployment can be done without sudo
+    # privileges. When provisioning the server for the first time, the links
+    # will be dead.
+    - name: Create symlinks for nginx
+      file:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        state: link
+        force: yes
+      with_items:
+        - { src: "{{ project_path }}/etc/{{ site_name }}.nginx.conf" , dest: "/etc/nginx/sites-available/{{ site_name }}.nginx.conf" }
+        - { src: "/etc/nginx/sites-available/{{ site_name }}.nginx.conf", dest: "/etc/nginx/sites-enabled/{{ site_name }}.nginx.conf" }

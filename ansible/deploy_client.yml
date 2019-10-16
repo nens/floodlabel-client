@@ -1,0 +1,53 @@
+# This playbook deploys the waterlabel client
+---
+- name: deploy new version of the project to the server
+  hosts: all
+  remote_user: "{{ build_user }}"
+
+  tasks:
+    - name: Check the current version of {{ client_name }}
+      command: 'cat {{ clients_path }}/{{ client_name }}/version.txt'
+      register: current_version
+      ignore_errors: yes
+      changed_when: False
+
+    - name: Download {{ client_name }} {{ client_version }}
+      command: wget -O '/tmp/{{ client_name }}-{{ client_version }}.zip' 'https://github.com/nens/{{ client_name }}/releases/download/{{ client_version }}/waterlabel.zip'
+      when: current_version.stdout != client_version
+
+    - name: Make a temporary dir to unzip {{ client_name }}
+      file:
+        dest: '/tmp/{{ client_name }}-{{ client_version }}'
+        state: directory
+        mode: 0775
+      when: current_version.stdout != client_version
+
+    - name: Unpack {{ client_name }}
+      unarchive:
+        src: '/tmp/{{ client_name }}-{{ client_version }}.zip'
+        dest: '/tmp/{{ client_name }}-{{ client_version }}'
+        remote_src: yes
+        mode: 0775
+      when: current_version.stdout != client_version
+
+    - name: Write version.txt of {{ client_name }}
+      copy:
+        dest: '/tmp/{{ client_name }}-{{ client_version }}/version.txt'
+        content: '{{ client_version }}'
+      when: current_version.stdout != client_version
+
+    - name: Remove old {{ client_name }} {{ current_version }}
+      file:
+        path: '{{ clients_path }}/{{ client_name }}'
+        state: absent
+      when: current_version.stdout != client_version
+
+    - name: Move new {{ client_name }} {{ current_version }} into place
+      command: 'mv /tmp/{{ client_name }}-{{ client_version }} {{ clients_path }}/{{ client_name }}'
+      when: current_version.stdout != client_version
+
+    - name: Clean up downloaded archive
+      file:
+        dest: '/tmp/{{ client_name }}-{{ client_version }}.zip'
+        state: absent
+      when: current_version.stdout != client_version

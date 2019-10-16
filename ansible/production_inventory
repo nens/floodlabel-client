@@ -1,0 +1,28 @@
+production:
+  hosts:
+    p-web-ws-d29.external-nens.local:
+  vars:
+    deploy_type: production
+    build_user: buildout
+    project_slug: waterlabel-site
+    package_name: waterlabel_site
+    site_name: "www.waterlabel.net"
+    host_names: "{{ site_name }} waterlabel-v2.lizard.net"
+    checkout_name: please-provide-checkout-name-in-the-extra-vars
+    project_path: "/srv/{{ site_name }}"
+    django_settings: "{{ package_name }}.productionsettings"
+    supervisor_port: 5051
+    gunicorn_port: 5050
+    gunicorn_workers: 3
+    supervisor_programs: [
+        'gunicorn'
+    ]
+    project_dirs: [
+        'etc',
+        'var/static',
+        'var/log',
+        'var/media'
+    ]
+    clients_path: "{{ project_path }}-clients"
+    client_name: waterlabel-client-v2
+    client_version: please-provide-version-in-the-extra-vars
