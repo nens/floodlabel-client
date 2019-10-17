@@ -1,0 +1,26 @@
+language: node_js
+node_js: node
+cache: yarn
+
+script:
+  - yarn
+  - yarn build
+  - zip -r floodlabel-client.zip build
+
+# Deploy uploads the zipfile to https://artifacts.lizard.net
+deploy:
+  # Master builds end up on https://floodlabel.staging.lizard.net/
+  - provider: script
+    skip_cleanup: true
+    script: bash upload-artifact.sh staging
+    on:
+      branch: master
+  # Tags end up on https://floodlabel.net
+  - provider: script
+    skip_cleanup: true
+    script: bash upload-artifact.sh production
+    on:
+      tags: true
+
+notifications:
+  email: false
