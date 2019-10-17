@@ -5,7 +5,6 @@ cache: yarn
 script:
   - yarn
   - yarn build
-  - docker-compose up
   - zip -r floodlabel-client.zip build
 
 # Deploy uploads the zipfile to https://artifacts.lizard.net
@@ -15,7 +14,7 @@ deploy:
     skip_cleanup: true
     script: bash upload-artifact.sh staging
     on:
-      branch: master
+      branch: reinout-travis
   # # Tags end up on https://TODO
   # - provider: script
   #   skip_cleanup: true
