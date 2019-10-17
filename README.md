@@ -5,7 +5,7 @@ Floodlabel-client
 TODO
 ----
 - [ ]: Set proper e-mail address in src/components/House.tsx on line 6 (EXPERT_EMAIL_ADDRESS)
- 
+
 
 
 ## Available Scripts
@@ -50,3 +50,18 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## Deployment
+
+Commits are automatically tested on "travis":
+https://travis-ci.com/nens/floodlabel-client/, this basically makes sure `yarn
+build` runs succesfully.
+
+But travis also releases via https://artifacts.lizard.net/ (you can check the
+upload status there).
+
+- **Staging**: master is automatically released to
+  https://floodlabel.staging.lizard.net
+
+- **Production**: tags are automatically released to TODO.
