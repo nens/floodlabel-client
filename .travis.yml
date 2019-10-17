@@ -14,13 +14,13 @@ deploy:
     skip_cleanup: true
     script: bash upload-artifact.sh staging
     on:
-      branch: reinout-travis
-  # # Tags end up on https://TODO
-  # - provider: script
-  #   skip_cleanup: true
-  #   script: bash upload-artifact.sh production
-  #   on:
-  #     tags: true
+      branch: master
+  # Tags end up on https://floodlabel.net
+  - provider: script
+    skip_cleanup: true
+    script: bash upload-artifact.sh production
+    on:
+      tags: true
 
 notifications:
   email: false

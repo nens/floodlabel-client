@@ -64,4 +64,4 @@ upload status there).
 - **Staging**: master is automatically released to
   https://floodlabel.staging.lizard.net
 
-- **Production**: tags are automatically released to TODO.
+- **Production**: tags are automatically released to https://floodlabel.net
