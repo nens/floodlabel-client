@@ -241,7 +241,7 @@ class Calculator extends React.Component<Props, State> {
               <span>
                 Zijn er rondom uw woning vaste verhogingen aanwezig
                 (bijvoorbeeld een glazen of betonnen verhoging van een kade
-                nabij water)?
+                nabij water)?{" "}
                 <QuestionMarkIcon
                   content={<Callout>Hier komt ook een text</Callout>}
                 />
@@ -312,7 +312,7 @@ class Calculator extends React.Component<Props, State> {
             <>
               <span>
                 Zijn er in de kelder vaste deurbarrières aanwezig (bijvoorbeeld
-                een waterdichte metalen deur)?
+                een waterdichte metalen deur)?{" "}
                 <QuestionMarkIcon
                   content={<Callout>Hier komt een text</Callout>}
                 />

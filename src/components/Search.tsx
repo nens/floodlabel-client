@@ -59,7 +59,7 @@ const Right = styled.div`
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
-  background-image: url("images/background-bucket-water.jpg");
+  background-image: url("/images/background-bucket-water.jpg");
   background-size: cover;
   background-position: center;
   @media (max-width: 768px) {
