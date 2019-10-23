@@ -2,6 +2,11 @@
   "name": "floodlabel",
   "version": "1.0.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "name": "nens/floodlabel-client",
+    "url": "https://github.com/nens/floodlabel-client.git"
+  },
   "license": "UNLICENSED",
   "author": "Gijs Nijholt <gijs.nijholt@gmail.com>",
   "dependencies": {
@@ -33,6 +38,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "release": "release-it --verbose",
     "eject": "react-scripts eject"
   },
   "proxy": "https://demo.lizard.net",
@@ -58,5 +64,8 @@
     "@types/rebass": "^4.0.0",
     "@types/styled-components": "^4.1.18",
     "@types/turf": "^3.5.32"
+  },
+  "devDependencies": {
+    "release-it": "^10.4.2"
   }
 }

@@ -1,0 +1,14 @@
+{
+  "prompt": {
+    "src": {
+      "status": true
+    }
+  },
+  "github": {
+    "release": true,
+    "assets": "dist/floodlabel-client.zip"
+  },
+  "npm": {
+    "publish": false
+  }
+}
