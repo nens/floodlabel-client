@@ -8,6 +8,7 @@ import MaskedField from "react-masked-field";
 import nensLogo from "./logos/logo-nens.png";
 import uuLogo from "./logos/logo-universiteit-utrecht.png";
 import urbanEuropeLogo from "./logos/logo-urban-europe.png";
+import addBaseUrlToApiCall from "./../utils/getUrl";
 
 type PathParamsType = {};
 type PropsType = RouteComponentProps<PathParamsType> & {};
@@ -208,6 +209,8 @@ class Search extends React.Component<PropsType, State> {
     if (postcode && huisnr) {
       // console.log("[dbg] handleClick", e);
       // console.log("[info]", postcode, huisnr, huisletter, toevoeging);
+      // Add Base Url to the api call if you are on staging or production.
+      var baseUrl = addBaseUrlToApiCall();
 
       this.setState(
         {
@@ -215,7 +218,7 @@ class Search extends React.Component<PropsType, State> {
           errorMessage: null
         },
         async () => {
-          let addressApiUrl = `/api/v3/buildings/?addresses__postalcode=${postcode
+          let addressApiUrl = `${baseUrl}/api/v3/buildings/?addresses__postalcode=${postcode
             .replace(" ", "")
             .toUpperCase()}&addresses__house_number=${huisnr}`;
           if (huisletter) {
@@ -242,7 +245,7 @@ class Search extends React.Component<PropsType, State> {
 
           if (addressResults.length > 0) {
             const labelResults = await fetch(
-              `/api/v3/labeltypes/${LABELTYPE_UUID}/compute/?object_id=${addressResults[0].id}`
+              `${baseUrl}/api/v3/labeltypes/${LABELTYPE_UUID}/compute/?object_id=${addressResults[0].id}`
             )
               .then(response => {
                 if (!response.ok) {

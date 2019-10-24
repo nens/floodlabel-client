@@ -6,7 +6,13 @@ TODO
 ----
 - [ ]: Set proper e-mail address in src/components/House.tsx on line 6 (EXPERT_EMAIL_ADDRESS)
 
+## Staging and production vs development.
 
+Api calls to staging and production should not be relative, but they should
+both start with demo.lizard.net.
+
+Dev uses the proxy provided in the package.json, because adding CORS for
+localhost is probably not something we would want.
 
 ## Available Scripts
 
