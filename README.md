@@ -10,6 +10,13 @@ TODO
 
 Api calls to staging and production should not be relative, but they should
 both start with demo.lizard.net.
+This is done in /src/components/Search.tsx and /src/components/Result.tsx
+with addBaseUrlToApiCall from /src/utils/getUrl.tsx.
+demo.lizard.net is used, because this client should use the building
+information from the Lizard backend (floodlabel.staging.lizard.net and
+floodlabel.net do not have their own backend). Since there is no data about
+this on staging and the app is read-only (not read-write), the production
+server is also used for staging.
 
 Dev uses the proxy provided in the package.json, because adding CORS for
 localhost is probably not something we would want.
