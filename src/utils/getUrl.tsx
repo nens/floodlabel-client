@@ -4,7 +4,6 @@
 // The window.location.href does not contain localhost if you are on staging
 // or production.
 function addBaseUrlToApiCall () {
-	var startUrl = "";
 	if (window.location.href.indexOf("localhost") === -1) {
 	  return("demo.lizard.net");
 	} else {
