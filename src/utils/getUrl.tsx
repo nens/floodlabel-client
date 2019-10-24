@@ -5,7 +5,7 @@
 // or production.
 function addBaseUrlToApiCall () {
 	if (window.location.href.indexOf("localhost") === -1) {
-	  return("demo.lizard.net");
+	  return("https://demo.lizard.net");
 	} else {
 	  return("");
 	}
