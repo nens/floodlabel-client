@@ -5,6 +5,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { ActivityIndicator } from "react-native-web";
 import centroid from "@turf/centroid";
 import * as GeoJSONType from "geojson";
+
 import ErrorBoundary from "./ErrorBoundary";
 import Calculator from "./Calculator";
 import Labels from "./Labels";
@@ -17,6 +18,7 @@ import RivierIcon from "./icons/Rivier";
 import NeerslagIcon from "./icons/Neerslag";
 import WaterbestendigeDeur from "./images/waterbestendige-deur.png";
 import TerugslagKlep from "./images/terugslagklep.png";
+import addBaseUrlToApiCall from "./../utils/getUrl";
 
 interface MatchParams {
   postcode: string;
@@ -249,10 +251,12 @@ class Result extends React.Component<Props, State> {
 
   async loadData() {
     const { match } = this.props;
+    // Add Base Url to the api call if you are on staging or production.
+    var baseUrl = addBaseUrlToApiCall();
 
     const { postcode, huisnr, toevoeging } = match.params;
     if (postcode && huisnr) {
-      let addressApiUrl = `/api/v3/buildings/?addresses__postalcode=${postcode
+      let addressApiUrl = `${baseUrl}/api/v3/buildings/?addresses__postalcode=${postcode
         .replace(" ", "")
         .toUpperCase()}`;
 
@@ -287,7 +291,7 @@ class Result extends React.Component<Props, State> {
 
       if (addressResults.length > 0) {
         const labelResults = await fetch(
-          `/api/v3/labeltypes/${LABELTYPE_UUID}/compute/?object_id=${addressResults[0].id}`
+          `${baseUrl}/api/v3/labeltypes/${LABELTYPE_UUID}/compute/?object_id=${addressResults[0].id}`
         )
           .then(response => {
             if (!response.ok) {
