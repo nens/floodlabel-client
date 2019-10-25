@@ -7,7 +7,7 @@
     "name": "nens/floodlabel-client",
     "url": "https://github.com/nens/floodlabel-client.git"
   },
-  "license": "UNLICENSED",
+  "license": "GPL-3.0",
   "author": "Gijs Nijholt <gijs.nijholt@gmail.com>",
   "dependencies": {
     "@turf/bbox": "^6.0.1",
@@ -63,9 +63,7 @@
     "@types/react-router-dom": "^4.3.5",
     "@types/rebass": "^4.0.0",
     "@types/styled-components": "^4.1.18",
-    "@types/turf": "^3.5.32"
-  },
-  "devDependencies": {
-    "release-it": "^10.4.2"
+    "@types/turf": "^3.5.32",
+    "release-it": "^12.4.3"
   }
 }

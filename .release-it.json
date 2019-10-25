@@ -5,8 +5,7 @@
     }
   },
   "github": {
-    "release": true,
-    "assets": "dist/floodlabel-client.zip"
+    "release": true
   },
   "npm": {
     "publish": false
