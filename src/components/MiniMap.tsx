@@ -3,6 +3,8 @@ import styled from "styled-components";
 import * as GeoJSONType from "geojson";
 import { Map, TileLayer, GeoJSON, WMSTileLayer } from "react-leaflet";
 
+import addBaseUrlToApiCall from "./../utils/getUrl";
+
 interface Props {
   center: any;
   feature: GeoJSONType.Feature;
@@ -61,6 +63,9 @@ const Title = styled.div`
     1px 1px 0 #ccc;
 `;
 
+// Add Base Url to the api call if you are on staging or production.
+var baseUrl = addBaseUrlToApiCall();
+
 const wmsLayers = [
   {
     layer: (
@@ -69,7 +74,7 @@ const wmsLayers = [
           "nelen-schuurmans:cas-klimaateffectenatlas-waterdiepte-1-100-jaar"
         }
         opacity={0.85}
-        url={"/wms/"}
+        url={`${baseUrl}/wms/`}
         attribution={"Klimaateffectenatlas.nl"}
       />
     ),
@@ -90,7 +95,7 @@ const wmsLayers = [
       <WMSTileLayer
         layers={"intern:nl:rws:nwm:ghg_ref2015_gem"}
         opacity={0.85}
-        url={"/wms/"}
+        url={`${baseUrl}/wms/`}
       />
     ),
     title: "Grondwater",
@@ -110,7 +115,7 @@ const wmsLayers = [
       <WMSTileLayer
         layers={"intern:nl:kea:overstromingsdiepte:primair"}
         opacity={0.85}
-        url={"/wms/"}
+        url={`${baseUrl}/wms/`}
         attribution={"Klimaateffectenatlas.nl"}
       />
     ),
