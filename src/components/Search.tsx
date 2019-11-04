@@ -227,10 +227,13 @@ class Search extends React.Component<PropsType, State> {
           if (toevoeging) {
             addressApiUrl += `&addresses__house_number_suffix=${toevoeging}`;
           }
+          console.log(addressApiUrl);
 
           const addressResults = await fetch(addressApiUrl)
             .then(response => {
+              console.log(response);
               if (response.ok) {
+                // console.log(response.json());
                 return response.json();
               }
               alert(`Foutmelding: ${response.statusText.toString()}`);

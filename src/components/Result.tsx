@@ -873,8 +873,11 @@ class Result extends React.Component<Props, State> {
                     <Label activeLabel={fluvial_label} />
                   </Icon>
                   <Icon>
-                    Grondwater
-                    <GrondwaterIcon />
+                    <span title="Meters onder maaiveld">Grondwater</span>
+                    <div style={{cursor:"pointer"}} onClick={() => this.setState({ showPage: "moreinfo" })}>
+                      <GrondwaterIcon />
+                    </div>
+                    <span style={{fontSize: "0.8rem"}}>Meters onder maaiveld</span> <br/><br/>
                     <Label activeLabel={groundwater_label} />
                   </Icon>
                   <Icon>
