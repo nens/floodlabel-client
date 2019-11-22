@@ -28,6 +28,7 @@ class QuestionMarkIcon extends React.Component<Props, State> {
 
     this.showPopover = this.showPopover.bind(this);
     this.hidePopover = this.hidePopover.bind(this);
+    this.togglePopover = this.togglePopover.bind(this);
   }
 
   showPopover() {
@@ -42,14 +43,19 @@ class QuestionMarkIcon extends React.Component<Props, State> {
     });
   }
 
+  togglePopover() {
+    this.setState({
+      showPopover: !this.state.showPopover
+    });
+  }
+
   render() {
     const { content } = this.props;
     const { showPopover } = this.state;
     const node = this.questionMarkRef.current;
     return (
       <QuestionMarkWrapper
-        onMouseOver={this.showPopover}
-        onMouseOut={this.hidePopover}
+        onClick={this.togglePopover}
         ref={this.questionMarkRef}
       >
         <svg
@@ -70,10 +76,22 @@ class QuestionMarkIcon extends React.Component<Props, State> {
             ></path>
           </g>
         </svg>
-        {node ? (
-          <Popover x={node.offsetLeft + 25} y={node.offsetTop}>
-            {showPopover ? content : null}
-          </Popover>
+        {node && showPopover ? (
+          <div
+            onClick={this.hidePopover}
+            style={{
+              position: "absolute",
+              backgroundColor: "transparent",
+              width: "100%",
+              height: "100%",
+              top: 0,
+              left: 0
+            }}
+          >
+            <Popover x={node.offsetLeft + 25} y={node.offsetTop}>
+              {showPopover ? content : null}
+            </Popover>
+          </div>
         ) : null}
       </QuestionMarkWrapper>
     );

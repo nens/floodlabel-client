@@ -16,8 +16,8 @@ import RioolIcon from "./icons/Riool";
 import GrondwaterIcon from "./icons/Grondwater";
 import RivierIcon from "./icons/Rivier";
 import NeerslagIcon from "./icons/Neerslag";
-import WaterbestendigeDeur from "./images/waterbestendige-deur.png";
-import TerugslagKlep from "./images/terugslagklep.png";
+// import WaterbestendigeDeur from "./images/waterbestendige-deur.png";
+// import TerugslagKlep from "./images/terugslagklep.png";
 import addBaseUrlToApiCall from "./../utils/getUrl";
 
 interface MatchParams {
@@ -170,16 +170,16 @@ const Tile = styled.div`
   box-shadow: 0px 5px 7px 1px rgba(0, 0, 0, 0.13);
 `;
 
-const Afbeelding = styled.div<{ image: any | null }>`
-  min-width: 160px;
-  min-height: 160px;
-  width: 160px;
-  height: 160px;
-  border: 1px solid #ccc;
-  margin: 20px 20px 20px 0;
-  background-image: url('${props => props.image}');
-  background-size: cover;
-`;
+// const Afbeelding = styled.div<{ image: any | null }>`
+//   min-width: 160px;
+//   min-height: 160px;
+//   width: 160px;
+//   height: 160px;
+//   border: 1px solid #ccc;
+//   margin: 20px 20px 20px 0;
+//   background-image: url('${props => props.image}');
+//   background-size: cover;
+// `;
 
 const Advies = styled.div`
   padding: 20px;
@@ -625,7 +625,7 @@ class Result extends React.Component<Props, State> {
                     huis een droge verdieping moeten zoeken
                   </p>
                 </Advies>
-                <Afbeelding image={null} />
+                {/* <Afbeelding image={null} /> */}
               </div>
             </Row>
 
@@ -650,7 +650,7 @@ class Result extends React.Component<Props, State> {
                     u uw waardevolle spullen naar boven verplaatst.
                   </p>
                 </Advies>
-                <Afbeelding image={null} />
+                {/* <Afbeelding image={null} /> */}
               </div>
             </Row>
 
@@ -676,7 +676,7 @@ class Result extends React.Component<Props, State> {
                     veroorzaken.
                   </p>
                 </Advies>
-                <Afbeelding image={null} />
+                {/* <Afbeelding image={null} /> */}
               </div>
             </Row>
 
@@ -711,7 +711,7 @@ class Result extends React.Component<Props, State> {
                     komt.
                   </p>
                 </Advies>
-                <Afbeelding image={WaterbestendigeDeur} />
+                {/* <Afbeelding image={WaterbestendigeDeur} /> */}
               </div>
             </Row>
 
@@ -743,7 +743,7 @@ class Result extends React.Component<Props, State> {
                     muren instorten door de waterdruk van buitenaf.
                   </p>
                 </Advies>
-                <Afbeelding image={null} />
+                {/* <Afbeelding image={null} /> */}
               </div>
             </Row>
 
@@ -766,7 +766,7 @@ class Result extends React.Component<Props, State> {
                     cm geplaatst worden, kan de waterschade beperkt worden.
                   </p>
                 </Advies>
-                <Afbeelding image={null} />
+                {/* <Afbeelding image={null} /> */}
               </div>
             </Row>
 
@@ -798,7 +798,69 @@ class Result extends React.Component<Props, State> {
                     rioolwaterschade.
                   </p>
                 </Advies>
-                <Afbeelding image={TerugslagKlep} />
+                {/* <Afbeelding image={TerugslagKlep}/> */}
+              </div>
+            </Row>
+
+            <Row>
+              <div
+                style={{
+                  backgroundColor: "#fff",
+                  width: "100%",
+                  boxShadow: "0px 5px 7px 1px rgba(0, 0, 0, 0.13)",
+                  borderRadius: 6,
+                  padding: 6,
+                  display: "flex",
+                  justifyContent: "space-between"
+                }}
+              >
+                <Advies>
+                  <h4 id="schuimisolatie-gesloten-cel">
+                    Schuim isolatie met gesloten cel structuur
+                  </h4>
+                  <p>
+                    Er zijn verschillende manieren om de binnenmuren van uw
+                    woning waterbestendig te maken. De meest voorkomende
+                    permanente maatregel is het aanbrengen van schuim isolatie
+                    met gesloten cel structuur om de muren van uw woning beter
+                    te beschermen tegen wateroverlast. Dit materiaal werkt
+                    daarnaast ook brandwerend en thermisch isolerend. In het
+                    geval van een overstroming zullen er nog steeds kosten zijn
+                    voor het droog- en schoonmaken van uw huis, maar door deze
+                    maatregel worden de aanvullende kosten van schadeherstel
+                    beperkt.
+                  </p>
+                </Advies>
+              </div>
+            </Row>
+
+            <Row>
+              <div
+                style={{
+                  backgroundColor: "#fff",
+                  width: "100%",
+                  boxShadow: "0px 5px 7px 1px rgba(0, 0, 0, 0.13)",
+                  borderRadius: 6,
+                  padding: 6,
+                  display: "flex",
+                  justifyContent: "space-between"
+                }}
+              >
+                <Advies>
+                  <h4 id="waterbestendige-stenen-vloer">
+                    Waterbestendige stenen vloer
+                  </h4>
+                  <p>
+                    In plaats van de vloer van uw woning te bedekken met karpet
+                    of laminaat, kan ook gewerkt worden met een betegelde vloer.
+                    Dit is een permanente maatregel om de overlast en schade van
+                    water op de vloer van uw woning te beperken. Een stenen
+                    vloer kan ook brandwerend en isolerend werken. Wanneer deze
+                    maatregel gecombineerd wordt met een betonnen in plaats van
+                    een houten ondervloer / fundering, wordt tevens de kans op
+                    schade door opkomend grondwater kleiner.
+                  </p>
+                </Advies>
               </div>
             </Row>
 

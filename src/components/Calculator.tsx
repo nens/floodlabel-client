@@ -126,7 +126,7 @@ const Callout = styled.div`
   background-color: #eaf9ff;
   border: 2px solid #167c9b;
   width: 200px;
-  height: 90px;
+  min-height: 100px;
   padding: 20px;
   font-weight: 600;
 `;
@@ -227,7 +227,31 @@ class Calculator extends React.Component<Props, State> {
                 Is de begane grond van uw woning verhoogd (bijvoorbeeld op
                 palen)?{" "}
                 <QuestionMarkIcon
-                  content={<Callout>Hier komt een text</Callout>}
+                  content={
+                    <Callout>
+                      Wanneer de voordeur van uw woning ongeveer 15 cm hoger
+                      ligt dan het straatniveau, door bijvoorbeeld{" "}
+                      <a
+                        onClick={e => e.stopPropagation()}
+                        href="http://wonen-interieur.com/wp-content/verhoging-tuin-e1520171202264.png"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        een opstapje
+                      </a>{" "}
+                      of{" "}
+                      <a
+                        onClick={e => e.stopPropagation()}
+                        href="https://s3-eu-west-1.amazonaws.com/static-sr.s3.werkspot.nl/c21931b9-e30b-4a93-99d3-6907e1e3661d.jpg"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        aflopend aangelegde voortuin
+                      </a>
+                      , zal het water bij hevige regenval of een
+                      rivieroverstroming minder snel uw woning binnendringen.
+                    </Callout>
+                  }
                 />
               </span>
             </>
@@ -243,7 +267,32 @@ class Calculator extends React.Component<Props, State> {
                 (bijvoorbeeld een glazen of betonnen verhoging van een kade
                 nabij water)?{" "}
                 <QuestionMarkIcon
-                  content={<Callout>Hier komt ook een text</Callout>}
+                  content={
+                    <Callout>
+                      Wanneer uw woning dichtbij een rivier of open water ligt,
+                      kan een vaste verhoging in de buurt van uw huis de
+                      wateroverlast uitstellen of beperken. Denk bijvoorbeeld
+                      aan een{" "}
+                      <a
+                        onClick={e => e.stopPropagation()}
+                        href="http://www.floodcontrolinternational.com/PRODUCTS/FLOOD-BARRIERS/Resources/Glass-flood-wall-LittleH-2c.jpg"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        glazen wand
+                      </a>{" "}
+                      of{" "}
+                      <a
+                        onClick={e => e.stopPropagation()}
+                        href="https://www.tspr.org/sites/wium/files/styles/x_large/public/201810/photo-burlington-riverfront_1.jpg"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        betonnen verhoging
+                      </a>{" "}
+                      van een kade nabij water.
+                    </Callout>
+                  }
                 />
               </span>
             </>
@@ -314,7 +363,21 @@ class Calculator extends React.Component<Props, State> {
                 Zijn er in de kelder vaste deurbarrières aanwezig (bijvoorbeeld
                 een waterdichte metalen deur)?{" "}
                 <QuestionMarkIcon
-                  content={<Callout>Hier komt een text</Callout>}
+                  content={
+                    <Callout>
+                      In het geval van opkomend grondwater kunnen vaste
+                      deurbarrières, bijvoorbeeld een{" "}
+                      <a
+                        onClick={e => e.stopPropagation()}
+                        href="http://emeralddoorsnyc.com/images/cellar/1.jpg"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        waterdichte metalen deur
+                      </a>
+                      , helpen om uw kelder vrij te houden van wateroverlast.
+                    </Callout>
+                  }
                 />
               </span>
             </>

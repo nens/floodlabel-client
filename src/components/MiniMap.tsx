@@ -59,8 +59,22 @@ const Title = styled.div`
   font-size: 2em;
   font-weight: 600;
   color: #fff;
-  text-shadow: -1px -1px 0 #ccc, 1px -1px 0 #ccc, -1px 1px 0 #ccc,
-    1px 1px 0 #ccc;
+  text-shadow: -1px -1px 0 #7b7b7b, 1px -1px 0 #7b7b7b, -1px 1px 0 #7b7b7b,
+    1px 1px 0 #7b7b7b;
+`;
+
+const SubTitle = styled.div`
+  pointer-events: none;
+  z-index: 10000;
+  text-align: center;
+  width: 100%;
+  top: 62px;
+  position: absolute;
+  font-size: 1.4em;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: -1px -1px 0 #7b7b7b, 1px -1px 0 #7b7b7b, -1px 1px 0 #7b7b7b,
+    1px 1px 0 #7b7b7b;
 `;
 
 // Add Base Url to the api call if you are on staging or production.
@@ -79,6 +93,7 @@ const wmsLayers = [
       />
     ),
     title: "Neerslag",
+    subtitle: "meter",
     legend: {
       gradient:
         "linear-gradient(to top, rgb(247, 251, 255), rgb(222, 235, 247), rgb(198, 219, 239), rgb(158, 202, 225), rgb(107, 174, 214), rgb(66, 146, 198), rgb(33, 113, 181), rgb(8, 81, 156), rgb(8, 48, 107))",
@@ -93,26 +108,6 @@ const wmsLayers = [
   {
     layer: (
       <WMSTileLayer
-        layers={"intern:nl:rws:nwm:ghg_ref2015_gem"}
-        opacity={0.85}
-        url={`${baseUrl}/wms/`}
-      />
-    ),
-    title: "Grondwater",
-    legend: {
-      gradient:
-        "linear-gradient(to top, rgb(8, 29, 88), rgb(37, 52, 148), rgb(34, 94, 168), rgb(29, 145, 192), rgb(65, 182, 196), rgb(127, 205, 187), rgb(199, 233, 180), rgb(237, 248, 177), rgb(255, 255, 217));",
-      from: {
-        label: "0.00 mMV"
-      },
-      to: {
-        label: "1.50 mMV"
-      }
-    }
-  },
-  {
-    layer: (
-      <WMSTileLayer
         layers={"intern:nl:kea:overstromingsdiepte:primair"}
         opacity={0.85}
         url={`${baseUrl}/wms/`}
@@ -120,6 +115,7 @@ const wmsLayers = [
       />
     ),
     title: "Rivieroverstroming",
+    subtitle: "meter boven NAP",
     legend: {
       gradient:
         "linear-gradient(to top, rgb(247, 251, 255), rgb(222, 235, 247), rgb(198, 219, 239), rgb(158, 202, 225), rgb(107, 174, 214), rgb(66, 146, 198), rgb(33, 113, 181), rgb(8, 81, 156), rgb(8, 48, 107));",
@@ -128,6 +124,27 @@ const wmsLayers = [
       },
       to: {
         label: "6.00 m"
+      }
+    }
+  },
+  {
+    layer: (
+      <WMSTileLayer
+        layers={"intern:nl:rws:nwm:ghg_ref2015_gem"}
+        opacity={0.85}
+        url={`${baseUrl}/wms/`}
+      />
+    ),
+    title: "Grondwater",
+    subtitle: "meter onder maaiveld",
+    legend: {
+      gradient:
+        "linear-gradient(to top, rgb(8, 29, 88), rgb(37, 52, 148), rgb(34, 94, 168), rgb(29, 145, 192), rgb(65, 182, 196), rgb(127, 205, 187), rgb(199, 233, 180), rgb(237, 248, 177), rgb(255, 255, 217));",
+      from: {
+        label: "0.00 mMV"
+      },
+      to: {
+        label: "1.50 mMV"
       }
     }
   }
@@ -166,26 +183,40 @@ class MiniMap extends React.Component<Props, State> {
     return (
       <MapWrapper>
         <Title>{wmsLayers[wmsId].title}</Title>
+        <SubTitle>({wmsLayers[wmsId].subtitle})</SubTitle>
         <Map
           ref={this.mapRef}
           center={[
             center.geometry.coordinates[1],
             center.geometry.coordinates[0]
           ]}
-          zoom={19}
+          zoom={18}
         >
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tiles.mapbox.com/v3/nelenschuurmans.iaa98k8k/{z}/{x}/{y}.png"
           />
           {wmsLayers[wmsId].layer}
-          <GeoJSON data={feature} />
+          <GeoJSON
+            data={feature}
+            style={() => {
+              return {
+                fillColor: "none"
+              };
+            }}
+          />
         </Map>
         <Controls>
           <Button onClick={this.handlePrev} title="Vorige laag">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              style={{ width: 50, height: 50, fill: "#fff" }}
+              style={{
+                width: 50,
+                height: 50,
+                fill: "#fff",
+                stroke: "black",
+                strokeWidth: "5"
+              }}
               viewBox="0 0 320 512"
             >
               <path d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z" />
@@ -194,7 +225,13 @@ class MiniMap extends React.Component<Props, State> {
           <Button onClick={this.handleNext} title="Volgende laag">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              style={{ width: 50, height: 50, fill: "#fff" }}
+              style={{
+                width: 50,
+                height: 50,
+                fill: "#fff",
+                stroke: "black",
+                strokeWidth: "5"
+              }}
               viewBox="0 0 320 512"
             >
               <path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" />
