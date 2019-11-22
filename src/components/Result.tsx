@@ -403,10 +403,15 @@ class Result extends React.Component<Props, State> {
       <Header>
         <BackButton
           onClick={() => {
-            history.push({
-              pathname: "/",
-              search: ""
-            });
+            const { showPage } = this.state;
+            if (showPage === "result") {
+              history.push({
+                pathname: "/",
+                search: ""
+              });
+            } else {
+              this.setState({ showPage: "result" });
+            }
           }}
         >
           &larr;
@@ -688,7 +693,9 @@ class Result extends React.Component<Props, State> {
                 }}
               >
                 <Advies>
-                  <h4 id="waterbestendige-voordeur">Waterbestendige voordeur</h4>
+                  <h4 id="waterbestendige-voordeur">
+                    Waterbestendige voordeur
+                  </h4>
                   <p>
                     Door het plaatsen van (verplaatsbare) waterschotten aan de
                     buitenkant van uw huis, kunt u het water buiten de deur
@@ -776,7 +783,9 @@ class Result extends React.Component<Props, State> {
                 }}
               >
                 <Advies>
-                  <h4 id="terugslagklep-in-riolering">Terugslagklep in riolering</h4>
+                  <h4 id="terugslagklep-in-riolering">
+                    Terugslagklep in riolering
+                  </h4>
                   <p>
                     Tijdens een overstroming, komt er veel water in het riool
                     terecht. Wanneer de riolering dit met zulke hoeveelheden
@@ -789,7 +798,7 @@ class Result extends React.Component<Props, State> {
                     rioolwaterschade.
                   </p>
                 </Advies>
-                <Afbeelding image={TerugslagKlep}/>
+                <Afbeelding image={TerugslagKlep} />
               </div>
             </Row>
 
