@@ -23,6 +23,8 @@ interface State {
   loading: boolean;
   error: null | boolean;
   errorMessage: null | string;
+  showIntroduction: boolean;
+  disableIntroduction: boolean;
 }
 
 const LABELTYPE_UUID = "e23c58ea-ae39-41bf-9867-021a996034b8";
@@ -68,6 +70,37 @@ const Right = styled.div`
     min-height: 250px;
     display: none;
   }
+`;
+
+const IntroductionWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: hsla(0, 0%, 20%, 0.7);
+  z-index: 99999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Introduction = styled.div`
+  width: 50%;
+  min-height: 400px;
+  background: #ffffff;
+  padding: 50px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.06);
+  line-height: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const CloseIntroductionButton = styled.button`
+  width: 100%;
+  height: 38px;
+  background-color: #fff;
+  color: #000;
+  font-size: 1.1em;
 `;
 
 const Slogan = styled.h1`
@@ -173,6 +206,19 @@ const ErrorMessage = styled.div`
 class Search extends React.Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
+
+    var showIntroduction = true;
+    try {
+      if (
+        localStorage.getItem("floodlabel:showIntroduction") !== null &&
+        localStorage.getItem("floodlabel:showIntroduction") !== "true"
+      ) {
+        showIntroduction = false;
+      }
+    } catch (e) {
+      console.warn("Error reading localStorage. Not supported by browser?");
+    }
+
     this.state = {
       error: false,
       errorMessage: null,
@@ -182,10 +228,13 @@ class Search extends React.Component<PropsType, State> {
       huisletter: null,
       loading: false,
       postcode: null,
-      toevoeging: null
+      toevoeging: null,
+      showIntroduction,
+      disableIntroduction: false
     };
     this.handleWindowResize = this.handleWindowResize.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleCloseIntroduction = this.handleCloseIntroduction.bind(this);
   }
 
   componentDidMount() {
@@ -200,6 +249,20 @@ class Search extends React.Component<PropsType, State> {
     const { innerHeight } = window;
     this.setState({
       height: innerHeight
+    });
+  }
+
+  handleCloseIntroduction(e: any) {
+    const { disableIntroduction } = this.state;
+    if (disableIntroduction) {
+      try {
+        localStorage.setItem("floodlabel:showIntroduction", "false");
+      } catch (e) {
+        console.warn("Error reading localStorage. Not supported by browser?");
+      }
+    }
+    this.setState({
+      showIntroduction: false
     });
   }
 
@@ -292,11 +355,53 @@ class Search extends React.Component<PropsType, State> {
       huisnr_input,
       huisnr,
       toevoeging,
-      loading
+      loading,
+      showIntroduction
     } = this.state;
 
     return (
       <div>
+        {showIntroduction ? (
+          <IntroductionWrapper>
+            <Introduction>
+              <h1>Welkom!</h1>
+              FLOODLABEL geeft een indicatie van hoe veilig uw woning is voor
+              verschillende typen overstromingen, zoals rivieroverstromingen,
+              hevige regenval of opkomend grondwater. Door specifieke informatie
+              over de kenmerken van uw woning in te vullen, kunt u passend
+              advies krijgen over mogelijke maatregelen die u kunt treffen voor
+              betere bescherming tegen water.
+              <small>
+                Disclaimer: FLOODLABEL is een prototype toepassing die is
+                ontwikkeld in het kader van het JPI Urban Europe
+                financieringsprogramma voor wetenschappelijk onderzoek. Meer
+                informatie over de context van dit project is te vinden via:{" "}
+                <a
+                  href="https://www.uu.nl/floodlabel/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  www.uu.nl/floodlabel
+                </a>
+                .
+              </small>
+              <CloseIntroductionButton onClick={this.handleCloseIntroduction}>
+                Sluiten
+              </CloseIntroductionButton>
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={() =>
+                    this.setState({
+                      disableIntroduction: !this.state.disableIntroduction
+                    })
+                  }
+                ></input>
+                &nbsp;<span style={{fontSize:'0.84em'}}>Niet meer tonen</span>
+              </label>
+            </Introduction>
+          </IntroductionWrapper>
+        ) : null}
         <Row id="row" height={height}>
           <Left id="left">
             <Logo>Floodlabel</Logo>
