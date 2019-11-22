@@ -435,6 +435,16 @@ class Search extends React.Component<PropsType, State> {
               style={{
                 position: "absolute",
                 bottom: 142,
+                left: 'calc(50% - 50px)',
+                fontSize: "0.8em"
+              }}
+            >
+              Partners:
+            </div>            
+            <div
+              style={{
+                position: "absolute",
+                bottom: 142,
                 right: 25,
                 fontSize: "0.8em"
               }}
