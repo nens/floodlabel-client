@@ -31,6 +31,7 @@ interface Props extends RouteComponentProps<MatchParams> {}
 
 interface State {
   error: boolean;
+  calculator_section: "fluval_pluvial" | "groundwater" | "sewage";
   fluvial_label: null | "A" | "B" | "C" | "D" | "E";
   fluvial_score: null | number;
   fluvial_value: null | number;
@@ -57,6 +58,21 @@ interface State {
 }
 
 const LABELTYPE_UUID = "e23c58ea-ae39-41bf-9867-021a996034b8";
+
+const JumpToQuestionButton = styled.button`
+  box-shadow: 0px 5px 7px 1px rgba(0, 0, 0, 0.13);
+  font-weight: 600;
+  background-color: #258ba0;
+  color: #fff;
+  border: 3px solid #258ba0;
+  border-radius: 10px;
+  font-size: 0.8em;
+  width: 294px;
+  height: 48px;
+  margin: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+`;
 
 const NothingFound = styled.div`
   display: flex;
@@ -210,6 +226,7 @@ class Result extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      calculator_section: "fluval_pluvial",
       error: false,
       fluvial_label: null,
       fluvial_score: null,
@@ -432,8 +449,12 @@ class Result extends React.Component<Props, State> {
             {header}
             <Row>
               <Calculator
+                setCalculatorSection={(section: any) => {
+                  this.setState({
+                    calculator_section: section
+                  });
+                }}
                 handleSubmit={(newLabelAndScores: any) => {
-                  // console.log("------->", newLabelAndScores);
                   this.setState({
                     fluvial_label: newLabelAndScores.fluvial_label.toUpperCase(),
                     fluvial_score: newLabelAndScores.fluvial_score,
@@ -446,6 +467,7 @@ class Result extends React.Component<Props, State> {
                     sewage_score: newLabelAndScores.sewage_score
                   });
                 }}
+                calculator_section={this.state.calculator_section}
                 handleCancel={() => this.setState({ showPage: "result" })}
                 label_score={label_score || 0}
                 pluvial_score={pluvial_score || 0}
@@ -532,15 +554,18 @@ class Result extends React.Component<Props, State> {
                         Risico's van overstromende rivieren
                       </MeasureTextHeader>
                       <MeasureTextParagraph>
-                        Uw woning wordt beschermd door waterkeringen zoals
-                        dijken. De hoogte en sterkte van de waterkeringen
-                        bepalen hoe kwetsbaar uw woning is voor
-                        rivieroverstromingen. Daarnaast wordt uw label beïnvloed
-                        door of uw woning hoger of lager gelegen is. Naast de
-                        ligging van uw woning zijn er nog andere, woning
-                        gebonden factoren die uw label kunnen beïnvloeden. Klik
-                        door naar de volgende pagina om uw label te specificeren
-                        naar uw persoonlijke situatie.
+                        Het label van uw woning voor rivier overstromingen wordt
+                        bepaald door de maximale waterdiepte. Dit komt overeen
+                        met het scenario van de ergst denkbare overstroming in
+                        Nederland. Uw woning wordt beschermd door waterkeringen
+                        zoals dijken. De hoogte en sterkte van de waterkeringen
+                        hebben invloed op de kans dat uw woning overstroomt als
+                        gevolg van een rivieroverstroming. Daarnaast wordt uw
+                        label beïnvloed door of uw woning hoger of lager gelegen
+                        is. Naast de ligging van uw woning zijn er nog andere,
+                        woning gebonden factoren die uw label kunnen
+                        beïnvloeden. Klik door naar de volgende pagina om uw
+                        label te specificeren naar uw persoonlijke situatie.
                       </MeasureTextParagraph>
                     </MeasureText>
                   </Measure>
@@ -710,6 +735,16 @@ class Result extends React.Component<Props, State> {
                     er voor dat het water niet via de buitendeuren naar binnen
                     komt.
                   </p>
+                  <JumpToQuestionButton
+                    onClick={() => {
+                      this.setState({
+                        showPage: "calculate",
+                        calculator_section: "fluval_pluvial"
+                      });
+                    }}
+                  >
+                    Kies voor maatregel
+                  </JumpToQuestionButton>
                 </Advies>
                 {/* <Afbeelding image={WaterbestendigeDeur} /> */}
               </div>
@@ -797,6 +832,16 @@ class Result extends React.Component<Props, State> {
                     terug kan instromen en vermindert daarmee de kans op
                     rioolwaterschade.
                   </p>
+                  <JumpToQuestionButton
+                    onClick={() => {
+                      this.setState({
+                        showPage: "calculate",
+                        calculator_section: "sewage"
+                      });
+                    }}
+                  >
+                    Kies voor maatregel
+                  </JumpToQuestionButton>
                 </Advies>
                 {/* <Afbeelding image={TerugslagKlep}/> */}
               </div>
@@ -830,6 +875,16 @@ class Result extends React.Component<Props, State> {
                     maatregel worden de aanvullende kosten van schadeherstel
                     beperkt.
                   </p>
+                  <JumpToQuestionButton
+                    onClick={() => {
+                      this.setState({
+                        showPage: "calculate",
+                        calculator_section: "fluval_pluvial"
+                      });
+                    }}
+                  >
+                    Kies voor maatregel
+                  </JumpToQuestionButton>
                 </Advies>
               </div>
             </Row>
@@ -860,6 +915,16 @@ class Result extends React.Component<Props, State> {
                     een houten ondervloer / fundering, wordt tevens de kans op
                     schade door opkomend grondwater kleiner.
                   </p>
+                  <JumpToQuestionButton
+                    onClick={() => {
+                      this.setState({
+                        showPage: "calculate",
+                        calculator_section: "groundwater"
+                      });
+                    }}
+                  >
+                    Kies voor maatregel
+                  </JumpToQuestionButton>
                 </Advies>
               </div>
             </Row>
@@ -925,10 +990,12 @@ class Result extends React.Component<Props, State> {
                         fontStyle: "italic"
                       }}
                     >
-                      Dit is een voorlopig label gebaseerd op openbare data.
-                      Klik verder om uw label aan te passen naar uw woning en om
-                      te kijken wat u zelf kunt doen voor uw veiligheid tegen
-                      water.
+                      Dit is een voorlopig label gebaseerd op openbare data over
+                      de maximale waterdiepte per type overstroming. De kans dat
+                      deze overstroming plaatsvindt is niet meegenomen in het
+                      label. Klik verder om uw label aan te passen naar uw
+                      woning en om te kijken wat u zelf kunt doen voor uw
+                      veiligheid tegen water.
                     </p>
                   </div>
                 </div>
@@ -976,7 +1043,12 @@ class Result extends React.Component<Props, State> {
                 Ik wil meer weten over het Floodlabel van mijn woning
               </BlueTile>
               <BlueTile
-                onClick={() => this.setState({ showPage: "calculate" })}
+                onClick={() =>
+                  this.setState({
+                    showPage: "calculate",
+                    calculator_section: "fluval_pluvial"
+                  })
+                }
               >
                 Pas het label aan met kenmerken van mijn woning
               </BlueTile>

@@ -6,11 +6,13 @@ import calculateFloodlabel from "../calculateLabel";
 import QuestionMarkIcon from "./icons/QuestionMark";
 
 interface Props {
+  calculator_section: "fluval_pluvial" | "groundwater" | "sewage";
   label_score: number;
   pluvial_score: number;
   fluvial_score: number;
   groundwater_score: number;
   sewage_score: number;
+  setCalculatorSection: Function;
   handleCancel: Function;
   handleSubmit: Function;
   old_floodlabel: null | "A" | "B" | "C" | "D" | "E";
@@ -24,7 +26,6 @@ type Question = {
 
 interface State {
   showModal: boolean;
-  section: "fluval_pluvial" | "groundwater" | "sewage";
   fluvial_pluvial_questions: Question[];
   groundwater_questions: Question[];
   sewage_questions: Question[];
@@ -206,10 +207,10 @@ const lookupTableSewage: any = {
 class Calculator extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
     this.state = {
       new_floodlabel: null,
       showModal: false,
-      section: "fluval_pluvial",
       groundwater_label: null,
       groundwater_score: null,
       sewage_label: null,
@@ -224,8 +225,7 @@ class Calculator extends React.Component<Props, State> {
           question: (
             <>
               <span>
-                Is de begane grond van uw woning verhoogd (bijvoorbeeld op
-                palen)?{" "}
+                Is de begane grond van uw woning 15 cm hoger dan straatniveau?{" "}
                 <QuestionMarkIcon
                   content={
                     <Callout>
@@ -263,9 +263,7 @@ class Calculator extends React.Component<Props, State> {
           question: (
             <>
               <span>
-                Zijn er rondom uw woning vaste verhogingen aanwezig
-                (bijvoorbeeld een glazen of betonnen verhoging van een kade
-                nabij water)?{" "}
+                Zijn er rondom uw woning vaste waterkerende schotten aanwezig?{" "}
                 <QuestionMarkIcon
                   content={
                     <Callout>
@@ -304,8 +302,9 @@ class Calculator extends React.Component<Props, State> {
           question: (
             <>
               <p>
-                Zijn er in uw woning vaste deurbarrières aanwezig (bijvoorbeeld
-                een waterdichte metalen deur)?
+                Heeft uw woning een waterdichte voordeur?
+                <br />
+                Indicatieve investering: &euro; 850 – &euro; 3000 per deur
               </p>
             </>
           ),
@@ -316,8 +315,8 @@ class Calculator extends React.Component<Props, State> {
           question: (
             <>
               <p>
-                Zijn er bij uw woning mobiele barrières aanwezig (bijvoorbeeld
-                verplaatsbare hardplastic schotten of opblaasbare buizen)?
+                Bent u in het bezit van mobiele barrières (waterschotten,
+                zandzakken of opblaasbare buizen)?
               </p>
             </>
           ),
@@ -328,7 +327,7 @@ class Calculator extends React.Component<Props, State> {
           question: (
             <>
               <p>
-                Zijn de openingen van uw woning (ramen, deuren, keldermuren)
+                Zijn de openingen van uw woning (ramen, voordeur, keldermuren)
                 geseald met waterdicht materiaal?
               </p>
             </>
@@ -341,7 +340,7 @@ class Calculator extends React.Component<Props, State> {
           id: 1,
           question: (
             <>
-              <p>Is er een kelder onder uw woning?</p>
+              <p>Heeft uw woning een kelder of (deels) ondergrondse garage?</p>
             </>
           ),
           answer: null
@@ -350,7 +349,12 @@ class Calculator extends React.Component<Props, State> {
           id: 2,
           question: (
             <>
-              <p>Zijn er waterbestendige (‘gesealde’) muren in de kelder?</p>
+              <p>
+                Heeft deze ruimte waterdichte (gesealde) muren?
+                <br />
+                Indicatieve investering: &euro; 750 – &euro; 3400 per huis /
+                &euro; 15 – &euro; 40 per m<sup>2</sup>
+              </p>
             </>
           ),
           answer: null
@@ -360,8 +364,7 @@ class Calculator extends React.Component<Props, State> {
           question: (
             <>
               <span>
-                Zijn er in de kelder vaste deurbarrières aanwezig (bijvoorbeeld
-                een waterdichte metalen deur)?{" "}
+                Heeft u in deze ruimte een waterdichte deur?{" "}
                 <QuestionMarkIcon
                   content={
                     <Callout>
@@ -389,8 +392,9 @@ class Calculator extends React.Component<Props, State> {
           question: (
             <>
               <p>
-                Zijn er in de kelder waterbestendige vloeren (bijvoorbeeld van
-                beton)?
+                Heeft deze ruimte waterdichte vloeren?
+                <br />
+                Indicatieve investering: &euro; 450 – &euro; 500 / m<sup>2</sup>
               </p>
             </>
           ),
@@ -402,7 +406,11 @@ class Calculator extends React.Component<Props, State> {
           id: 1,
           question: (
             <>
-              <p>Is er een terugslagklep geïnstalleerd?</p>
+              <p>
+                Is er een terugslagklep geïnstalleerd?
+                <br />
+                Indicatieve investering: &euro; 600 – &euro; 750 per rioolafvoer
+              </p>
             </>
           ),
           answer: null
@@ -491,14 +499,6 @@ class Calculator extends React.Component<Props, State> {
     const sewage_label = calculateFloodlabel(sewage_score, 0, 20);
     const total_label: any = calculateFloodlabel(total_score, 0, 100);
 
-    // console.log("-------------------------");
-    // console.log("old label", this.props.old_floodlabel);
-    // console.log("fluvial", fluvial_score, fluvial_label);
-    // console.log("pluvial", pluvial_score, pluvial_label);
-    // console.log("groundwater", groundwater_score, groundwater_label);
-    // console.log("sewage", sewage_score, sewage_label);
-    // console.log("total", total_score, total_label);
-
     this.setState({
       fluvial_label,
       fluvial_score,
@@ -515,15 +515,19 @@ class Calculator extends React.Component<Props, State> {
 
   renderSection() {
     const {
-      section,
+      // section,
       fluvial_pluvial_questions,
       groundwater_questions,
       sewage_questions
     } = this.state;
 
-    const { handleCancel } = this.props;
+    const {
+      handleCancel,
+      calculator_section,
+      setCalculatorSection
+    } = this.props;
 
-    switch (section) {
+    switch (calculator_section) {
       case "fluval_pluvial":
         return (
           <>
@@ -560,9 +564,7 @@ class Calculator extends React.Component<Props, State> {
               <CancelButton onClick={() => handleCancel()}>
                 Annuleren
               </CancelButton>
-              <NextButton
-                onClick={() => this.setState({ section: "groundwater" })}
-              >
+              <NextButton onClick={() => setCalculatorSection("groundwater")}>
                 Volgende
               </NextButton>
             </ControlButtons>
@@ -602,10 +604,12 @@ class Calculator extends React.Component<Props, State> {
               })}
             </Questions>
             <ControlButtons>
-              <CancelButton onClick={() => handleCancel()}>
-                Annuleren
+              <CancelButton
+                onClick={() => setCalculatorSection("fluval_pluvial")}
+              >
+                Vorige
               </CancelButton>
-              <NextButton onClick={() => this.setState({ section: "sewage" })}>
+              <NextButton onClick={() => setCalculatorSection("sewage")}>
                 Volgende
               </NextButton>
             </ControlButtons>
@@ -643,8 +647,8 @@ class Calculator extends React.Component<Props, State> {
               })}
             </Questions>
             <ControlButtons>
-              <CancelButton onClick={() => handleCancel()}>
-                Annuleren
+              <CancelButton onClick={() => setCalculatorSection("groundwater")}>
+                Vorige
               </CancelButton>
               <NextButton onClick={this.handleCalculateLabel}>
                 Bereken mijn label opnieuw
