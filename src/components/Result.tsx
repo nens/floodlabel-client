@@ -340,6 +340,8 @@ class Result extends React.Component<Props, State> {
             pluvial_score: labelResults.extra.pluvial_score,
             pluvial_value: labelResults.extra.pluvial_value,
             postcode: addressResults[0].addresses[0].postalcode,
+            sewage_score: labelResults.extra.sewage_score,
+            sewage_label: labelResults.extra.sewage_label,
             stad: addressResults[0].addresses[0].city,
             straatnaam: addressResults[0].addresses[0].street,
             toevoeging: addressResults[0].addresses[0].house_number_suffix

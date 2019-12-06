@@ -453,7 +453,7 @@ class Calculator extends React.Component<Props, State> {
             : lookupTableFluvial[currentValue.id].no;
         return total + val;
       },
-      0
+      this.props.fluvial_score
     );
 
     const pluvial_score = fluvial_pluvial_questions.reduce(
@@ -464,7 +464,7 @@ class Calculator extends React.Component<Props, State> {
             : lookupTablePluvial[currentValue.id].no;
         return total + val;
       },
-      0
+      this.props.pluvial_score
     );
 
     const groundwater_score = groundwater_questions.reduce(
@@ -475,7 +475,7 @@ class Calculator extends React.Component<Props, State> {
             : lookupTableGroundwater[currentValue.id].no;
         return total + val;
       },
-      0
+      this.props.groundwater_score
     );
 
     const sewage_score = sewage_questions.reduce((total, currentValue) => {
@@ -484,7 +484,7 @@ class Calculator extends React.Component<Props, State> {
           ? lookupTableSewage[currentValue.id].yes
           : lookupTableSewage[currentValue.id].no;
       return total + val;
-    }, 0);
+    }, this.props.sewage_score);
 
     const total_score =
       label_score +
