@@ -496,8 +496,8 @@ class Calculator extends React.Component<Props, State> {
     const fluvial_label = calculateFloodlabel(fluvial_score, 0, 20);
     const pluvial_label = calculateFloodlabel(pluvial_score, 0, 20);
     const groundwater_label = calculateFloodlabel(groundwater_score, 0, 20);
-    const sewage_label = calculateFloodlabel(sewage_score, 0, 20);
-    const total_label: any = calculateFloodlabel(total_score, 0, 100);
+    const sewage_label = calculateFloodlabel(sewage_score, 0, 50);
+    const total_label: any = calculateFloodlabel(total_score, 0, 150);
 
     this.setState({
       fluvial_label,

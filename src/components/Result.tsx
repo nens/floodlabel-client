@@ -255,9 +255,9 @@ class Result extends React.Component<Props, State> {
       stad: null,
       straatnaam: null,
       toevoeging: null,
-      sewage_score: 5,
+      sewage_score: null,
       sewage_value: null,
-      sewage_label: "B"
+      sewage_label: null
     };
     this.loadData = this.loadData.bind(this);
   }
@@ -599,7 +599,13 @@ class Result extends React.Component<Props, State> {
                 Ik wil meer weten over het Floodlabel van mijn woning
               </BlueTile>
               <BlueTile
-                onClick={() => this.setState({ showPage: "calculate" })}
+                onClick={async () => {
+                  await this.loadData(); // This call is done because calculation data needs to be fresh everytime
+                  this.setState({
+                    showPage: "calculate",
+                    calculator_section: "fluval_pluvial"
+                  });
+                }}
               >
                 Pas het label aan met kenmerken van mijn woning
               </BlueTile>
@@ -936,7 +942,13 @@ class Result extends React.Component<Props, State> {
                 Ik wil meer weten over het Floodlabel van mijn woning
               </BlueTile>
               <BlueTile
-                onClick={() => this.setState({ showPage: "calculate" })}
+                onClick={async () => {
+                  await this.loadData(); // This call is done because calculation data needs to be fresh everytime
+                  this.setState({
+                    showPage: "calculate",
+                    calculator_section: "fluval_pluvial"
+                  });
+                }}
               >
                 Pas het label aan met kenmerken van mijn woning
               </BlueTile>
@@ -1045,12 +1057,13 @@ class Result extends React.Component<Props, State> {
                 Ik wil meer weten over het Floodlabel van mijn woning
               </BlueTile>
               <BlueTile
-                onClick={() =>
+                onClick={async () => {
+                  await this.loadData(); // This call is done because calculation data needs to be fresh everytime
                   this.setState({
                     showPage: "calculate",
                     calculator_section: "fluval_pluvial"
-                  })
-                }
+                  });
+                }}
               >
                 Pas het label aan met kenmerken van mijn woning
               </BlueTile>
