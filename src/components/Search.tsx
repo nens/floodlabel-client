@@ -281,7 +281,7 @@ class Search extends React.Component<PropsType, State> {
           errorMessage: null
         },
         async () => {
-          let addressApiUrl = `${baseUrl}/api/v3/buildings/?addresses__postalcode=${postcode
+          let addressApiUrl = `${baseUrl}/api/v3/buildings/?end__isnull=true&addresses__postalcode=${postcode
             .replace(" ", "")
             .toUpperCase()}&addresses__house_number=${huisnr}`;
           if (huisletter) {

@@ -273,7 +273,7 @@ class Result extends React.Component<Props, State> {
 
     const { postcode, huisnr, toevoeging } = match.params;
     if (postcode && huisnr) {
-      let addressApiUrl = `${baseUrl}/api/v3/buildings/?addresses__postalcode=${postcode
+      let addressApiUrl = `${baseUrl}/api/v3/buildings/?end__isnull=true&addresses__postalcode=${postcode
         .replace(" ", "")
         .toUpperCase()}`;
 
