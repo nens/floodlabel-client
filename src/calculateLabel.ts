@@ -32,7 +32,7 @@ export function calculateTotalFloodLabel(score: number) {
    */ 
 
 
-  if (score >= 0 && score <= 16) {
+  if (score <= 16) {
     return "a";
   }
 
