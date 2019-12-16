@@ -74,7 +74,4 @@ build` runs succesfully.
 But travis also releases via https://artifacts.lizard.net/ (you can check the
 upload status there).
 
-- **Staging**: master is automatically released to
-  https://floodlabel.staging.lizard.net
-
-- **Production**: tags are automatically released to https://floodlabel.net
+- **Production**: master is automatically released to https://floodlabel.net
