@@ -9,18 +9,12 @@ script:
 
 # Deploy uploads the zipfile to https://artifacts.lizard.net
 deploy:
-  # Master builds end up on https://floodlabel.staging.lizard.net/
-  - provider: script
-    skip_cleanup: true
-    script: bash upload-artifact.sh staging
-    on:
-      branch: master
-  # Tags end up on https://floodlabel.net
+  # Master builds end up on https://floodlabel.net/
   - provider: script
     skip_cleanup: true
     script: bash upload-artifact.sh production
     on:
-      tags: true
+      branch: master
 
 notifications:
   email: false
