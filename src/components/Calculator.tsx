@@ -2,7 +2,10 @@ import * as React from "react";
 import styled from "styled-components";
 import YesNoButton from "./YesNoButton";
 import Labels from "./Labels";
-import { calculateFloodlabel, calculateTotalFloodLabel } from "../calculateLabel";
+import {
+  calculateFloodlabel,
+  calculateTotalFloodLabel
+} from "../calculateLabel";
 import QuestionMarkIcon from "./icons/QuestionMark";
 
 interface Props {
@@ -443,10 +446,11 @@ class Calculator extends React.Component<Props, State> {
       sewage_questions
     } = this.state;
 
-    const { label_score } = this.props;
-
     const fluvial_score = fluvial_pluvial_questions.reduce(
       (total, currentValue) => {
+        if (currentValue.answer === null) {
+          return total;
+        }
         const val =
           currentValue.answer === true
             ? lookupTableFluvial[currentValue.id].yes
@@ -458,6 +462,9 @@ class Calculator extends React.Component<Props, State> {
 
     const pluvial_score = fluvial_pluvial_questions.reduce(
       (total, currentValue) => {
+        if (currentValue.answer === null) {
+          return total;
+        }
         const val =
           currentValue.answer === true
             ? lookupTablePluvial[currentValue.id].yes
@@ -469,6 +476,9 @@ class Calculator extends React.Component<Props, State> {
 
     const groundwater_score = groundwater_questions.reduce(
       (total, currentValue) => {
+        if (currentValue.answer === null) {
+          return total;
+        }
         const val =
           currentValue.answer === true
             ? lookupTableGroundwater[currentValue.id].yes
@@ -479,6 +489,9 @@ class Calculator extends React.Component<Props, State> {
     );
 
     const sewage_score = sewage_questions.reduce((total, currentValue) => {
+      if (currentValue.answer === null) {
+        return total;
+      }
       const val =
         currentValue.answer === true
           ? lookupTableSewage[currentValue.id].yes
@@ -487,11 +500,7 @@ class Calculator extends React.Component<Props, State> {
     }, this.props.sewage_score);
 
     const total_score =
-      label_score +
-      fluvial_score +
-      pluvial_score +
-      groundwater_score +
-      sewage_score;
+      fluvial_score + pluvial_score + groundwater_score + sewage_score;
 
     const fluvial_label = calculateFloodlabel(fluvial_score, 0, 20);
     const pluvial_label = calculateFloodlabel(pluvial_score, 0, 20);
